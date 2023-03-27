@@ -1,4 +1,7 @@
 FROM dciangot/dask-scheduler:v8
 
+ENV PATH="/usr/local/share/miniconda/bin:${PATH}"
+ARG PATH="/usr/local/share/miniconda/bin:${PATH}"
+
 RUN source /usr/local/share/miniconda/bin/activate
 RUN conda install -c conda-forge root==6.28.0 
