@@ -2,7 +2,7 @@ FROM dciangot/dask-scheduler:v8
 
 RUN yum -y update \
     && yum -y upgrade \
-    && yum -y install davix libXpm-devel libXft-devel\
+    && yum -y install davix libXpm-devel libXft-devel cmake\
     && yum -y clean all 
 
 
