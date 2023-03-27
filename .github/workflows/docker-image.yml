@@ -28,4 +28,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          file: Dockerfile.conda
           tags: tommaso93/${{ github.event.repository.name }}:latest,tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}
