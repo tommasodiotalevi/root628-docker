@@ -1,8 +1,8 @@
-FROM dciangot/dask-scheduler:v8
+FROM ghcr.io/comp-dev-cms-ita/jupyterlab:v2.0.1-patch10-dask-alma8
 
 RUN yum -y update \
     && yum -y upgrade \
-    && yum -y install davix libXpm-devel libXft-devel cmake\
+    && yum -y install davix libXpm-devel libXft-devel\
     && yum -y clean all 
 
 
