@@ -1,4 +1,4 @@
-FROM ghcr.io/comp-dev-cms-ita/jupyterlab:v2.0.1-patch10-dask-alma8
+FROM dciangot/dask-scheduler:v8
 
 RUN yum -y update \
     && yum -y upgrade \
