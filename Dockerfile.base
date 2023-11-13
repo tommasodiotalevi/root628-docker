@@ -1,24 +1,33 @@
 FROM dciangot/dask-scheduler:v8
 
-RUN yum -y update \
-    && yum -y upgrade \
-    && yum -y install davix libXpm-devel libXft-devel\
+RUN yum -y install davix libXpm-devel libXft-devel bzip2\
     && yum -y clean all 
 
+# Build GCC 9.0 from source
+
+RUN wget http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-9.1.0/gcc-9.1.0.tar.gz\
+    && tar zxf gcc-9.1.0.tar.gz
+
+RUN ./gcc-9.1.0/contrib/download_prerequisites
+RUN ./gcc-9.1.0/configure --disable-multilib --enable-languages=c,c++
+RUN make -j $(nproc) && make install
+
+ENV PATH=usr/local/bin:$PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64
 
 
 # Build ROOT 6.28
 
 RUN git clone --branch v6-28-00 --depth=1 https://github.com/root-project/root.git root_src
 RUN mkdir root_build
-RUN cmake -Dgminimal=ON -Dpyroot=ON -Ddataframe=ON -Dgnuinstall=ON -Ddev=ON \
+RUN cmake3 -Dgminimal=ON -Dpyroot=ON -Ddataframe=ON -Dgnuinstall=ON -Ddev=ON \
           -Dbuiltin_xrootd=ON -Dxrootd=ON -Dbuiltin_davix=ON -Ddavix=ON  \
           -Dtmva=ON -Dmlp=ON -Dtmva-pymva=ON -Dtmva-cpu=ON -Dtmva-sofie=ON \
           -Dasimage=ON -Druntime_cxxmodules=ON \
           -B root_build -S root_src
-RUN cmake --build root_build -- install -j$(nproc)
+RUN cmake3 --build root_build -- install -j$(nproc)
 # Remove artifacts
-RUN rm -rf root_build root_src
+RUN rm -rf root_build root_src gcc-9.1.0
 
 # Change environment so that libraries are properly found
 RUN echo /usr/local/lib/root >> /etc/ld.so.conf && ldconfig
