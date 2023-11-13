@@ -14,9 +14,9 @@ RUN ./configure --disable-multilib --enable-languages=c,c++
 RUN make -j $(nproc) && make install
 WORKDIR /usr/local/share/comp-dev-cms-ita/dask-remote-jobqueue
 
-ENV PATH=/usr/local/bin:$PATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64
-
+ENV CC /usr/local/bin/gcc
+ENV CXX /usr/local/bin/g++
+ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64
 
 # Build ROOT 6.28
 
