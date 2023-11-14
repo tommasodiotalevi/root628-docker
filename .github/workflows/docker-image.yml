@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  alma8-root628-conda:
+  centos7-root628-conda:
 
     runs-on: ubuntu-latest
 
@@ -28,8 +28,33 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          file: Dockerfile.conda
+          file: Dockerfile.conda-cc7
           tags: tommaso93/${{ github.event.repository.name }}:latest,tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-conda
+
+  centos7-root628-source:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - 
+        name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          file: Dockerfile.source-cc7
+          tags: tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-source
 
   alma8-root628-source:
 
@@ -53,5 +78,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          file: Dockerfile.base
-          tags: tommaso93/${{ github.event.repository.name }}:latest,tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-base
+          file: Dockerfile.source-alma8
+          tags: tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-source
