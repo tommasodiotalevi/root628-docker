@@ -14,6 +14,7 @@ RUN ./configure --disable-multilib --enable-languages=c,c++
 RUN make -j $(nproc) && make install
 WORKDIR /usr/local/share/comp-dev-cms-ita/dask-remote-jobqueue
 
+ENV PATH /usr/local/share/miniconda/bin:/usr/local/share/miniconda/condabin:$PATH
 ENV CC /usr/local/bin/gcc
 ENV CXX /usr/local/bin/g++
 ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64
