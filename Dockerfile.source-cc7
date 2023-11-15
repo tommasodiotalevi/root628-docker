@@ -31,6 +31,7 @@ RUN cmake3 -Dgminimal=ON -Dpyroot=ON -Ddataframe=ON -Dgnuinstall=ON -Ddev=ON \
 RUN cmake3 --build root_build -- install -j$(nproc)
 # Remove artifacts
 RUN rm -rf root_build root_src gcc-9.1.0
+RUN rm gcc-9.1.0.tar.gz
 
 # Change environment so that libraries are properly found
 RUN echo /usr/local/lib/root >> /etc/ld.so.conf && ldconfig
