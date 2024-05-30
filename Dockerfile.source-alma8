@@ -4,7 +4,7 @@ RUN sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/htcondor.repo \
     && rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux \
     && yum -y update \
     && yum -y upgrade \
-    && yum -y install davix xrootd-devel xrootd-client-devel libXpm-devel libXft-devel\
+    && yum -y install davix xrootd-devel xrootd-client-devel xrootd-client libXpm-devel libXft-devel\
     && yum -y clean all 
 
 
