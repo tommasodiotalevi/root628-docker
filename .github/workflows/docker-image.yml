@@ -29,7 +29,7 @@ jobs:
         with:
           push: true
           file: Dockerfile.conda-cc7
-          tags: tommaso93/${{ github.event.repository.name }}:latest,tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-conda-cc7
+          tags: tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-conda-cc7
 
   centos7-root628-source:
 
@@ -79,4 +79,4 @@ jobs:
         with:
           push: true
           file: Dockerfile.source-alma8
-          tags: tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-source-alma8
+          tags: tommaso93/${{ github.event.repository.name }}:latest,tommaso93/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-source-alma8
