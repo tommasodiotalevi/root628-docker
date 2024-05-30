@@ -1,8 +1,10 @@
 FROM ghcr.io/comp-dev-cms-ita/jupyterlab:v2.0.1-patch10-dask-alma8
 
-RUN yum -y update \
+RUN sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/htcondor.repo \
+    && rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux \
+    && yum -y update \
     && yum -y upgrade \
-    && yum -y install davix libXpm-devel libXft-devel\
+    && yum -y install davix xrootd-devel xrootd-client-devel libXpm-devel libXft-devel\
     && yum -y clean all 
 
 
@@ -12,7 +14,7 @@ RUN yum -y update \
 RUN git clone --branch v6-28-00 --depth=1 https://github.com/root-project/root.git root_src
 RUN mkdir root_build
 RUN cmake -Dgminimal=ON -Dpyroot=ON -Ddataframe=ON -Dgnuinstall=ON -Ddev=ON \
-          -Dbuiltin_xrootd=ON -Dxrootd=ON -Dbuiltin_davix=ON -Ddavix=ON  \
+          -Dbuiltin_xrootd=OFF -Dxrootd=ON -Dbuiltin_davix=OFF -Ddavix=ON  \
           -Dtmva=ON -Dmlp=ON -Dtmva-pymva=ON -Dtmva-cpu=ON -Dtmva-sofie=ON \
           -Dasimage=ON -Druntime_cxxmodules=ON \
           -B root_build -S root_src
